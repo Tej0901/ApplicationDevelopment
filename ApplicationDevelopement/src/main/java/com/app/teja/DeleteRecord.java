@@ -8,13 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 //@WebServlet("/api/StudentRecords/deleteDetail")
-public class DeleteDetail extends HttpServlet 
+public class DeleteRecord extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
@@ -23,7 +22,7 @@ public class DeleteDetail extends HttpServlet
 		try 
 		{
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		String url = "jdbc:mysql://localhost:3306/StudentManagementSystem";//added useSSl=false to avoid the warning
+		String url = "jdbc:mysql://localhost:3306/StudentManagementSystem?autoReconnect=true&useSSL=false";//added useSSl=false to avoid the warning
 		String userName = "root";
 		String userPassword = "teja0901";
 		Connection con = DriverManager.getConnection(url, userName, userPassword);
