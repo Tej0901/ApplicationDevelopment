@@ -83,13 +83,13 @@
   </servlet-mapping>
   
   <servlet>
-  <servlet-name>deletingDetail</servlet-name>
-  <servlet-class>com.app.teja.DeleteDetail</servlet-class>
+  <servlet-name>deletingRecords</servlet-name>
+  <servlet-class>com.app.teja.DeleteRecord</servlet-class>
   </servlet>
   
   <servlet-mapping>
-  <servlet-name>deletingDetail</servlet-name>
-  <url-pattern>/deleteDetail</url-pattern>
+  <servlet-name>deletingRecords</servlet-name>
+  <url-pattern>/deleteRecord</url-pattern>
   </servlet-mapping>
   
 </web-app>

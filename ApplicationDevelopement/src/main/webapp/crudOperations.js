@@ -26,7 +26,6 @@ function getAllRecordsAndInsert()
 	    console.log(Data);
 	    var table = document.getElementById("stdlist").getElementsByTagName('tbody')[0];
 	    var newRow = table.insertRow(table.length);
-	    //var Data = JSON.stringify(jsonData);
 	    newRow.insertCell(0).innerHTML = Data.id;
 	    newRow.insertCell(1).innerHTML = Data.firstName;
 	    newRow.insertCell(2).innerHTML = Data.lastName;
@@ -98,22 +97,29 @@ function onEdit(td) {  //need to change
     selectedDataRow = td.parentElement.parentElement;
     let id = selectedDataRow.cells[0].innerHTML;
     alert("selected Appl.ID is: "+ id);
-    fetch(`http://localhost:8080/ApplicationDevelopement/getParticularDetail/`+id)
-    .then(response => response.json())
-    .then(data => {
-		document.getElementById("id").value = data.id;
-        document.getElementById("firstName").value = data.firstName;
-        document.getElementById("lastName").value = data.lastName;
-        document.getElementById("email").value = data.email;
-        document.getElementById("phoneNo").value = data.phoneNo;
-        document.getElementById("age").value = data.age;
-        document.getElementById("gender").value = data.gender;
-        document.getElementById("address").value = data.address;
-        document.getElementById("state").value = data.state;
-        document.getElementById("program").value = data.program;
-        document.getElementById("dept").value = data.dept;
-    })
-    .catch(error => console.error(error))
+    var xhr = new XMLHttpRequest();
+	xhr.open('GET', "/ApplicationDevelopement/getParticularDetail?id="+id, true);
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+	    var Data = JSON.parse(xhr.responseText);
+	    console.log(Data);
+	    document.getElementById("id").value = Data.id;
+        document.getElementById("firstName").value = Data.firstName;
+        document.getElementById("lastName").value = Data.lastName;
+        document.getElementById("email").value = Data.email;
+        document.getElementById("phoneNo").value = Data.phoneNo;
+        document.getElementById("age").value = Data.age;
+        document.getElementById("gender").value = Data.gender;
+        document.getElementById("address").value = Data.address;
+        document.getElementById("state").value = Data.state;
+        document.getElementById("program").value = Data.program;
+        document.getElementById("dept").value = Data.dept;
+	  } else {
+	    console.log('Request failed.  Returned status of ' + xhr.status);
+	  }
+	};
+	xhr.send();
 }
 
 // Update Record
@@ -146,17 +152,21 @@ function updateRecord(data) {
 function onDelete(td) {
     if (confirm('Are you sure ,you want to delete this record... ?')) {
         row = td.parentElement.parentElement;
-        let id = row.cells[0].innerHTML;
+        let recordId = row.cells[0].innerHTML;
         alert("deleting Appl.ID: "+ id);
         document.getElementById("stdlist").deleteRow(row.rowIndex);
-        fetch('http://localhost:8080/ApplicationDevelopement/deleteDetail/'+id, {
-        method:'DELETE',
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8'
-          }
-        })
-        .then(response => response.json()) 
-        .then(response => console.log(response))
+        var xhr = new XMLHttpRequest();
+		xhr.open('GET', "/ApplicationDevelopement/deleteRecord?id="+recordId, true);
+		xhr.setRequestHeader('Content-type', 'application/json');
+		xhr.onload = function() {
+		  if (xhr.status === 200) {
+		    console.log(xhr.responseText);
+		  } else {
+		    console.log('Request failed.  Returned status of ' + xhr.status);
+		  }
+		};
+		xhr.send();
+		alert("Record Deleted!!!");
         resetForm();
     }
 }
