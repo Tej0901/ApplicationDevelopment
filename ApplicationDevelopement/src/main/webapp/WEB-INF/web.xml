@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  
+  <servlet>
+  <servlet-name>Login</servlet-name>
+  <servlet-class>com.app.teja.LoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>Login</servlet-name>
+  <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>LoginVerification</servlet-name>
+  <servlet-class>com.app.teja.LoginVerificationServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>LoginVerification</servlet-name>
+  <url-pattern>/LoginVerificationServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>Logout</servlet-name>
+  <servlet-class>com.app.teja.LogoutServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>Logout</servlet-name>
+  <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>     
+    <servlet-name>Profile</servlet-name>  
+    <servlet-class>com.app.teja.ProfileServlet</servlet-class>  
+  </servlet>  
+  
+  <servlet-mapping>  
+    <servlet-name>Profile</servlet-name>  
+    <url-pattern>/ProfileServlet</url-pattern>  
+  </servlet-mapping> 
+  
+  
+  <servlet>
+  <servlet-name>gettingAllDetails</servlet-name>
+  <servlet-class>com.app.teja.GetAllDetails</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>gettingAllDetails</servlet-name>
+  <url-pattern>/getAllDetails</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>getParticularDetail</servlet-name>
+  <servlet-class>com.app.teja.GetParticularDetail</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>getParticularDetail</servlet-name>
+  <url-pattern>/getParticularDetail</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>sendingDetails</servlet-name>
+  <servlet-class>com.app.teja.PostDetail</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>sendingDetails</servlet-name>
+  <url-pattern>/postDetail</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>updatingDetail</servlet-name>
+  <servlet-class>com.app.teja.PutDetail</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>updatingDetail</servlet-name>
+  <url-pattern>/putDetail</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>deletingDetail</servlet-name>
+  <servlet-class>com.app.teja.DeleteDetail</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>deletingDetail</servlet-name>
+  <url-pattern>/deleteDetail</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
