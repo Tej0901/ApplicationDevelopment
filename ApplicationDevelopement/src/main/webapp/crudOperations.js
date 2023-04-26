@@ -22,29 +22,30 @@ function getAllRecordsAndInsert()
 	xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.onload = function() {
 	  if (xhr.status === 200) {
-	    var jsonData = JSON.parse(xhr.responseText);
-	    console.log(jsonData);
+	    var Data = JSON.parse(xhr.responseText);
+	    console.log(Data);
+	    var table = document.getElementById("stdlist").getElementsByTagName('tbody')[0];
+	    var newRow = table.insertRow(table.length);
+	    //var Data = JSON.stringify(jsonData);
+	    newRow.insertCell(0).innerHTML = Data.id;
+	    newRow.insertCell(1).innerHTML = Data.firstName;
+	    newRow.insertCell(2).innerHTML = Data.lastName;
+	    newRow.insertCell(3).innerHTML = Data.email;
+	    newRow.insertCell(4).innerHTML = Data.phoneNo;
+	    newRow.insertCell(5).innerHTML = Data.age;
+	    newRow.insertCell(6).innerHTML = Data.gender;
+	    newRow.insertCell(7).innerHTML = Data.address;
+	    newRow.insertCell(8).innerHTML = Data.state;
+	    newRow.insertCell(9).innerHTML = Data.program;
+	    newRow.insertCell(10).innerHTML = Data.dept;
+	    cell13 = newRow.insertCell(11);
+	    cell13.innerHTML = `<a onClick="onEdit(this)" style="color:white;">Edit</a>
+	        <a onClick="onDelete(this)" style="color:white;">Delete</a>`;
 	  } else {
 	    console.log('Request failed.  Returned status of ' + xhr.status);
 	  }
 	};
 	xhr.send();
-	var table = document.getElementById("stdlist").getElementsByTagName('tbody')[0];
-    var newRow = table.insertRow(table.length);
-    newRow.insertCell(0).innerHTML = jsonData.id;
-    newRow.insertCell(1).innerHTML = jsonData.firstName;
-    newRow.insertCell(2).innerHTML = jsonData.lastName;
-    newRow.insertCell(3).innerHTML = jsonData.email;
-    newRow.insertCell(4).innerHTML = jsonData.phoneNo;
-    newRow.insertCell(5).innerHTML = jsonData.age;
-    newRow.insertCell(6).innerHTML = jsonData.gender;
-    newRow.insertCell(7).innerHTML = jsonData.address;
-    newRow.insertCell(8).innerHTML = jsonData.state;
-    newRow.insertCell(9).innerHTML = jsonData.program;
-    newRow.insertCell(10).innerHTML = jsonData.dept;
-    cell13 = newRow.insertCell(11);
-    cell13.innerHTML = `<a onClick="onEdit(this)" style="color:white;">Edit</a>
-        <a onClick="onDelete(this)" style="color:white;">Delete</a>`;
 }
 
 // Insert New Record

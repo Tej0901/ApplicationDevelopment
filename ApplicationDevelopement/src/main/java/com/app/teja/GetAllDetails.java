@@ -56,10 +56,9 @@ public class GetAllDetails extends HttpServlet
 		student.setDept(rSet.getString(11));
 		}
 		//sending data to Client via JSon Object
-//		String json = gson.toJson(student);
-//        response.setContentType("application/json");
-//        out.print(json);
-        out.println(student.getFirstName());
+		String json = gson.toJson(student);
+        response.setContentType("application/json");
+        response.getWriter().write(json);
 		
 		rSet.close();
 		}
