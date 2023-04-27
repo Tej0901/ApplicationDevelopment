@@ -21,9 +21,12 @@ function getAllRecordsAndInsert()
 	xhr.open('GET', '/ApplicationDevelopement/getAllDetails', true);
 	xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.onload = function() {
-	  if (xhr.status === 200) {
-	    var Data = JSON.parse(xhr.responseText);
-	    console.log(Data);
+	if (xhr.status === 200) {
+		var jsonArray = JSON.parse(xhr.responseText);
+        for (var i = 0; i < jsonArray.length; i++) 
+        {
+        var jsonString = jsonArray[i];
+        var Data = JSON.parse(jsonString);
 	    var table = document.getElementById("stdlist").getElementsByTagName('tbody')[0];
 	    var newRow = table.insertRow(table.length);
 	    newRow.insertCell(0).innerHTML = Data.id;
@@ -40,6 +43,7 @@ function getAllRecordsAndInsert()
 	    cell13 = newRow.insertCell(11);
 	    cell13.innerHTML = `<a onClick="onEdit(this)" style="color:white;">Edit</a>
 	        <a onClick="onDelete(this)" style="color:white;">Delete</a>`;
+	  }
 	  } else {
 	    console.log('Request failed.  Returned status of ' + xhr.status);
 	  }
@@ -51,11 +55,13 @@ function getAllRecordsAndInsert()
 function insertNewRecord(formdata) { //need to change
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "/ApplicationDevelopement/postDetail", true);
-	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.onreadystatechange = function() {
-  	if(xhr.readyState === 4 && xhr.status === 200) {
+  	if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
     	console.log(xhr.responseText);
-  	}
+  	}else {
+	    console.log('Request failed.  Returned status of ' + xhr.status);
+	  }
 	};
 	xhr.send(JSON.stringify(formdata));
 	var table = document.getElementById("stdlist").getElementsByTagName('tbody')[0];
@@ -123,29 +129,33 @@ function onEdit(td) {  //need to change
 }
 
 // Update Record
-function updateRecord(data) {
+function updateRecord(formData) {
+	
     alert("selected Row is: "+ selectedDataRow.rowIndex);
-    selectedDataRow.cells[0].innerHTML = data.id;
-    selectedDataRow.cells[1].innerHTML = data.firstName;
-    selectedDataRow.cells[2].innerHTML = data.lastName;
-    selectedDataRow.cells[3].innerHTML = data.email;
-    selectedDataRow.cells[4].innerHTML = data.phoneNo;
-    selectedDataRow.cells[5].innerHTML = data.age;
-    selectedDataRow.cells[6].innerHTML = data.gender;
-    selectedDataRow.cells[7].innerHTML = data.address;
-    selectedDataRow.cells[8].innerHTML = data.state;
-    selectedDataRow.cells[9].innerHTML = data.program;
-    selectedDataRow.cells[10].innerHTML = data.dept;
-
-    fetch('http://localhost:8080/ApplicationDevelopement/putDetail/'+data.id, {
-    method: 'PUT',
-    headers: {
-    'Content-Type': 'application/json;charset=UTF-8'
-    },
-    body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .catch(error => console.error(error))
+    let id = selectedDataRow.cells[0].innerHTML;
+    var xhr = new XMLHttpRequest();
+	xhr.open("PUT", "/ApplicationDevelopement/putDetail?id="+id, true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.onreadystatechange = function() {
+  	if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+    	console.log(xhr.responseText);
+  	}else {
+	    console.log('Request failed.  Returned status of ' + xhr.status);
+	  }
+	};
+	xhr.send(JSON.stringify(formData));
+    selectedDataRow.cells[0].innerHTML = formData.id;
+    selectedDataRow.cells[1].innerHTML = formData.firstName;
+    selectedDataRow.cells[2].innerHTML = formData.lastName;
+    selectedDataRow.cells[3].innerHTML = formData.email;
+    selectedDataRow.cells[4].innerHTML = formData.phoneNo;
+    selectedDataRow.cells[5].innerHTML = formData.age;
+    selectedDataRow.cells[6].innerHTML = formData.gender;
+    selectedDataRow.cells[7].innerHTML = formData.address;
+    selectedDataRow.cells[8].innerHTML = formData.state;
+    selectedDataRow.cells[9].innerHTML = formData.program;
+    selectedDataRow.cells[10].innerHTML = formData.dept;
+    alert("Data Updated !!!");
 }
 
 // Delete Function
@@ -154,18 +164,18 @@ function onDelete(td) {
         row = td.parentElement.parentElement;
         let recordId = row.cells[0].innerHTML;
         alert("deleting Appl.ID: "+ id);
-        document.getElementById("stdlist").deleteRow(row.rowIndex);
         var xhr = new XMLHttpRequest();
-		xhr.open('GET', "/ApplicationDevelopement/deleteRecord?id="+recordId, true);
+		xhr.open('DELETE', "/ApplicationDevelopement/deleteRecord?id="+recordId, true);
 		xhr.setRequestHeader('Content-type', 'application/json');
 		xhr.onload = function() {
-		  if (xhr.status === 200) {
+		  if (xhr.status === 200 || xhr.status === 204) {
 		    console.log(xhr.responseText);
 		  } else {
 		    console.log('Request failed.  Returned status of ' + xhr.status);
 		  }
 		};
 		xhr.send();
+		document.getElementById("stdlist").deleteRow(row.rowIndex);
 		alert("Record Deleted!!!");
         resetForm();
     }
