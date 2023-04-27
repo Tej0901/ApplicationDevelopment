@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 
 //@WebServlet("/api/StudentRecords/getAllDetails")
@@ -34,31 +35,39 @@ public class GetAllDetails extends HttpServlet
 		Connection con = DriverManager.getConnection(url, userName, userPassword);
 		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		Gson gson = new Gson();
-		Student student = new Student();
+		Student student[] = new Student[100];
+		String json[] = new String[100];
+		JsonArray jsonArray = new JsonArray();
+		response.setContentType("application/json");
 		
 		String query = "SELECT * FROM StudentDetails";
 		ResultSet rSet = stmt.executeQuery(query);
+		int studentIndex = -1;
 		
 		//Storing data in Student POJO
 		rSet.beforeFirst();
 		while(rSet.next()) 
 		{
-		student.setID(rSet.getString(1));
-		student.setFirstName(rSet.getString(2));
-		student.setLastName(rSet.getString(3));
-		student.setEmail(rSet.getString(4));
-		student.setPhoneNo(rSet.getString(5));
-		student.setAge(rSet.getString(6));
-		student.setGender(rSet.getString(7));
-		student.setAddress(rSet.getString(8));
-		student.setState(rSet.getString(9));
-		student.setProgram(rSet.getString(10));
-		student.setDept(rSet.getString(11));
+		studentIndex++;
+		student[studentIndex] = new Student();
+		student[studentIndex].setID(rSet.getString(1));
+		student[studentIndex].setFirstName(rSet.getString(2));
+		student[studentIndex].setLastName(rSet.getString(3));
+		student[studentIndex].setEmail(rSet.getString(4));
+		student[studentIndex].setPhoneNo(rSet.getString(5));
+		student[studentIndex].setAge(rSet.getString(6));
+		student[studentIndex].setGender(rSet.getString(7));
+		student[studentIndex].setAddress(rSet.getString(8));
+		student[studentIndex].setState(rSet.getString(9));
+		student[studentIndex].setProgram(rSet.getString(10));
+		student[studentIndex].setDept(rSet.getString(11));
+		json[studentIndex] = gson.toJson(student[studentIndex]);
+		jsonArray.add(json[studentIndex]);
+		//sending data to Client via JSon String
+//		response.getWriter().write(json[studentIndex]);
 		}
-		//sending data to Client via JSon Object
-		String json = gson.toJson(student);
-        response.setContentType("application/json");
-        response.getWriter().write(json);
+		String jsonString  = jsonArray.toString();
+		response.getWriter().write(jsonString);
 		
 		rSet.close();
 		}
