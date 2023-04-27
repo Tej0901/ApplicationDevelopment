@@ -34,6 +34,7 @@ public class GetAllDetails extends HttpServlet
 		String userPassword = "teja0901";
 		Connection con = DriverManager.getConnection(url, userName, userPassword);
 		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		
 		Gson gson = new Gson();
 		Student student[] = new Student[100];
 		String json[] = new String[100];
@@ -63,10 +64,10 @@ public class GetAllDetails extends HttpServlet
 		student[studentIndex].setDept(rSet.getString(11));
 		json[studentIndex] = gson.toJson(student[studentIndex]);
 		jsonArray.add(json[studentIndex]);
-		//sending data to Client via JSon String
-//		response.getWriter().write(json[studentIndex]);
 		}
+		//sending data to Client via JSon Array of jsonStrings
 		String jsonString  = jsonArray.toString();
+//		response.getWriter().write(HttpServletResponse.SC_OK);
 		response.getWriter().write(jsonString);
 		
 		rSet.close();

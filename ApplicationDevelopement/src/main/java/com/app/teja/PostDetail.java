@@ -5,7 +5,9 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -30,27 +32,51 @@ public class PostDetail extends HttpServlet {
 		String userName = "root";
 		String userPassword = "teja0901";
 		Connection con = DriverManager.getConnection(url, userName, userPassword);
-
+		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		String jsonString = request.getReader().lines().collect(Collectors.joining());
 		Gson gson = new Gson();
 		Student student = gson.fromJson(jsonString, Student.class);
 		
-		String query ="INSERT INTO StudentDetails VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement stmt2 = con.prepareStatement(query);
-		stmt2.setString(1, student.getID());
-		stmt2.setString(2, student.getFirstName());
-		stmt2.setString(3, student.getLastName());
-		stmt2.setString(4, student.getEmail());
-		stmt2.setString(5, student.getPhoneNo());
-		stmt2.setString(6, student.getAge());
-		stmt2.setString(7, student.getGender());
-		stmt2.setString(8, student.getAddress());
-		stmt2.setString(9, student.getState());
-		stmt2.setString(10, student.getProgram());
-		stmt2.setString(11, student.getDept());
-		int i = stmt2.executeUpdate();
-		out.println(i+" Rows Updated!!");
-		stmt2.close();
+		String idCheckQuery = "SELECT id FROM StudentDetails";
+		ResultSet rSetTwo = stmt.executeQuery(idCheckQuery);
+		boolean flag=true;
+		while(rSetTwo.next() && flag)
+		{
+			if(student.getID() == rSetTwo.getString(1));
+			{
+				flag=false;
+			}
+		}
+		
+		if(!flag) 
+		{
+		      response.setStatus(HttpServletResponse.SC_CONFLICT); // 409 Conflict
+		      response.setContentType("application/json");
+		      response.getWriter().write("{\"message\": \"ID already exists\"}");
+		}
+		else 
+			{
+			String query ="INSERT INTO StudentDetails VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+			PreparedStatement stmt2 = con.prepareStatement(query);
+			stmt2.setString(1, student.getID());
+			stmt2.setString(2, student.getFirstName());
+			stmt2.setString(3, student.getLastName());
+			stmt2.setString(4, student.getEmail());
+			stmt2.setString(5, student.getPhoneNo());
+			stmt2.setString(6, student.getAge());
+			stmt2.setString(7, student.getGender());
+			stmt2.setString(8, student.getAddress());
+			stmt2.setString(9, student.getState());
+			stmt2.setString(10, student.getProgram());
+			stmt2.setString(11, student.getDept());
+			int i = stmt2.executeUpdate();
+			stmt2.close();
+			out.println(i+" Rows Updated!!");
+			out.println(jsonString);
+		    response.setStatus(HttpServletResponse.SC_OK); // 200 OK
+		    response.setContentType("application/json");
+		    response.getWriter().write("{\"message\": \"Operation successful\"}");
+		  }
 		con.close();
 		}
 		catch (ClassNotFoundException e)
