@@ -8,7 +8,7 @@ function printErrorMsg(elementId, errorMsg)
 //Application ID Validation function
 function isIDValid(id)
 {
-	let isValid = true;
+	var isValid = true;
 	if(id == "")
 	{
 		isValid = false;
@@ -24,12 +24,12 @@ function isIDValid(id)
 //firstName validation function
 function isFirstNameValid(firstName)
 {
-	let isValid = true;
+	var isValid = true;
 	if (firstName == "") {
         isValid = false;
         printErrorMsg("noFirstName","please enter your First Name"); 
     } else {
-        let regex=/^[a-zA-Z\s]+$/; 
+        var regex=/^[a-zA-Z\s]+$/; 
         if(regex.test(firstName) == false && firstName.length > 40){
             isValid = false;
             printErrorMsg("noFirstName","please enter a valid First Name (Only alphabets with maxLength:40"); 
@@ -45,12 +45,12 @@ function isFirstNameValid(firstName)
 //lastName validation function
 function isLastNamevalid(lastName)
 {
-	let isValid = true;
+	var isValid = true;
 	if (lastName == "") {
         isValid = false;
         printErrorMsg("noLastName","please enter your Last Name"); 
     } else {
-        let regex=/^[a-zA-Z\s]+$/; 
+        var regex=/^[a-zA-Z\s]+$/; 
         if(regex.test(lastName) == false && lastName.length > 25){
             isValid = false;
             printErrorMsg("noLastName","please enter a valid Last Name (Only Alphabets and maxLength:25");
@@ -66,12 +66,12 @@ function isLastNamevalid(lastName)
 //Email validation function
 function isEmailValid(email)
 {
-	let isValid = true;
+	var isValid = true;
 	if (email == "") {
         isValid = false;
         printErrorMsg("noEmail","please enter your Email Address");
     } else {
-        let regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+        var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
         if(regex.test(email) == false){
             isValid = false;
             printErrorMsg("noEmail","please enter a valid Email");
@@ -87,12 +87,12 @@ function isEmailValid(email)
 //phoneNo validation function
 function isPhoneNoValid(phoneNo)
 {
-	let isValid = true;
+	var isValid = true;
 	if (phoneNo == "") {
         isValid = false;
         printErrorMsg("noPhoneNo","please enter your Mobile Number");
     } else {
-        let regex= /^(0|91)?[6-9][0-9]{9}$/;
+        var regex= /^(0|91)?[6-9][0-9]{9}$/;
         if(regex.test(phoneNo) == false){
             isValid = false;
             printErrorMsg("noPhoneNo","please enter a valid Mobile number");
@@ -108,7 +108,7 @@ function isPhoneNoValid(phoneNo)
 //Date Of Birth Validation Function
 function isAgeValid(age)
 {
-	let isValid = true;
+	var isValid = true;
 	if(age == "")
 	{
 		isValid = false;
@@ -131,7 +131,7 @@ function isAgeValid(age)
 //Gender Validation
 function isGendervalid(gender)
 {
-	let isValid = true;
+	var isValid = true;
 	if(gender == "")
 	{
 		isValid = false;
@@ -147,7 +147,7 @@ function isGendervalid(gender)
 //Address Validation function
 function isAddressValid(address)
 {
-    let isValid = true;
+    var isValid = true;
     if(address == "")
     {
         isValid = false;
@@ -163,7 +163,7 @@ function isAddressValid(address)
 //State validation functon
 function isStateValid(state)
 {
-    let isValid = true;
+    var isValid = true;
     if(state == "")
     {
         isValid = false;
@@ -179,7 +179,7 @@ function isStateValid(state)
 //progarm validation functon
 function isprogramvalid(program)
 {
-    let isValid = true;
+    var isValid = true;
     if(program == "")
     {
         isValid = false;
@@ -195,7 +195,7 @@ function isprogramvalid(program)
 //Dept validation functon
 function isDeptValid(dept)
 {
-    let isValid = true;
+    var isValid = true;
     if(dept == "")
     {
         isValid = false;
@@ -280,29 +280,29 @@ function getDept()
 // main validation function
 function validate() 
 {
-	let id = getID();
-    let firstName = getFirstName();
-    let lastName = getLastname();
-    let email = getEmail();
-    let phoneNo = getPhoneNo();
-    let age = getAge();
-    let gender = getGender();
-    let address = getAddress();
-    let state = getState();
-    let program = getProgram();
-    let dept = getDept();
+	var id = getID();
+    var firstName = getFirstName();
+    var lastName = getLastname();
+    var email = getEmail();
+    var phoneNo = getPhoneNo();
+    var age = getAge();
+    var gender = getGender();
+    var address = getAddress();
+    var state = getState();
+    var program = getProgram();
+    var dept = getDept();
     
-    let idValidity = isIDValid(id);
-    let firstNameValidity = isFirstNameValid(firstName);
-    let lastNameValidity = isLastNamevalid(lastName);
-    let emailvalidity = isEmailValid(email);
-    let phoneNovalidity = isPhoneNoValid(phoneNo);
-    let ageValidity = isAgeValid(age);
-    let genderValidity = isGendervalid(gender);
-    let addressValidity = isAddressValid(address);
-    let stateValidity = isStateValid(state);
-    let programValidity = isprogramvalid(program);
-    let deptValidity = isDeptValid(dept);
+    var idValidity = isIDValid(id);
+    var firstNameValidity = isFirstNameValid(firstName);
+    var lastNameValidity = isLastNamevalid(lastName);
+    var emailvalidity = isEmailValid(email);
+    var phoneNovalidity = isPhoneNoValid(phoneNo);
+    var ageValidity = isAgeValid(age);
+    var genderValidity = isGendervalid(gender);
+    var addressValidity = isAddressValid(address);
+    var stateValidity = isStateValid(state);
+    var programValidity = isprogramvalid(program);
+    var deptValidity = isDeptValid(dept);
     
     //validate all of them
     if(idValidity && firstNameValidity && lastNameValidity && emailvalidity && phoneNovalidity && ageValidity && genderValidity && addressValidity && stateValidity && programValidity && deptValidity)

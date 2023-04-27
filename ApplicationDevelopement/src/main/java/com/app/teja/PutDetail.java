@@ -54,7 +54,8 @@ public class PutDetail extends HttpServlet
 		stmt2.setString(11, requiredId);
 		
 		int i = stmt2.executeUpdate();
-		out.print(i+" Rows Updated!!");
+		out.println(i+" Rows Updated!!");
+		out.println(jsonString);
 		stmt2.close();
 		con.close();
 		}
