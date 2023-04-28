@@ -28,6 +28,7 @@ public class GetAllDetails extends HttpServlet
 		PrintWriter out = response.getWriter();
 		try 
 		{
+		//Database Connection
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		String url = "jdbc:mysql://localhost:3306/StudentManagementSystem?autoReconnect=true&useSSL=false";//added useSSl=false to avoid the warning
 		String userName = "root";
@@ -41,6 +42,7 @@ public class GetAllDetails extends HttpServlet
 		JsonArray jsonArray = new JsonArray();
 		response.setContentType("application/json");
 		
+		//query execution
 		String query = "SELECT * FROM StudentDetails";
 		ResultSet rSet = stmt.executeQuery(query);
 		int studentIndex = -1;
@@ -65,10 +67,9 @@ public class GetAllDetails extends HttpServlet
 		json[studentIndex] = gson.toJson(student[studentIndex]);
 		jsonArray.add(json[studentIndex]);
 		}
+		
 		//sending data to Client via JSon Array of jsonStrings
-		String jsonString  = jsonArray.toString();
-//		response.getWriter().write(HttpServletResponse.SC_OK);
-		response.getWriter().write(jsonString);
+		out.print(jsonArray);
 		
 		rSet.close();
 		}
