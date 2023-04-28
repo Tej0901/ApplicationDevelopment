@@ -26,35 +26,40 @@ public class GetParticularDetail extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try 
 		{
+		//Database Connection	
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		String url = "jdbc:mysql://localhost:3306/StudentManagementSystem?autoReconnect=true&useSSL=false";//added useSSl=false to avoid the warning
+		String url = "jdbc:mysql://localhost:3306/StudentManagementSystem?autoReconnect=true&useSSL=false";
 		String userName = "root";
 		String userPassword = "teja0901";
 		Connection con = DriverManager.getConnection(url, userName, userPassword);
 		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		Gson gson = new Gson();
+		Student student = new Student();
 		
+		//query execution
 		String requiredId = request.getParameter("id");
 		String query = "SELECT * FROM StudentDetails WHERE id="+requiredId;
 		ResultSet rSet = stmt.executeQuery(query);
-		Gson gson1 = new Gson();
-		Student student2 = new Student();
 		rSet.next();
-		student2.setID(rSet.getString(1));
-		student2.setFirstName(rSet.getString(2));
-		student2.setLastName(rSet.getString(3));
-		student2.setEmail(rSet.getString(4));
-		student2.setPhoneNo(rSet.getString(5));
-		student2.setAge(rSet.getString(6));
-		student2.setGender(rSet.getString(7));
-		student2.setAddress(rSet.getString(8));
-		student2.setState(rSet.getString(9));
-		student2.setProgram(rSet.getString(10));
-		student2.setDept(rSet.getString(11));
+		student.setID(rSet.getString(1));
+		student.setFirstName(rSet.getString(2));
+		student.setLastName(rSet.getString(3));
+		student.setEmail(rSet.getString(4));
+		student.setPhoneNo(rSet.getString(5));
+		student.setAge(rSet.getString(6));
+		student.setGender(rSet.getString(7));
+		student.setAddress(rSet.getString(8));
+		student.setState(rSet.getString(9));
+		student.setProgram(rSet.getString(10));
+		student.setDept(rSet.getString(11));
 		
 		//sending data to Client via JSon Object
-		String json = gson1.toJson(student2);
+		String jsonString = gson.toJson(student);
         response.setContentType("application/json");
-        response.getWriter().write(json);
+        response.getWriter().write(jsonString);
+        stmt.close();
+        con.close();
+        
 		}
 		catch (ClassNotFoundException e)
 		{

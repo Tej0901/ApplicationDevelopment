@@ -21,20 +21,26 @@ public class DeleteRecord extends HttpServlet
 		PrintWriter out = response.getWriter();
 		try 
 		{
+		//Database Connection
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		String url = "jdbc:mysql://localhost:3306/StudentManagementSystem?autoReconnect=true&useSSL=false";//added useSSl=false to avoid the warning
+		String url = "jdbc:mysql://localhost:3306/StudentManagementSystem?autoReconnect=true&useSSL=false";
 		String userName = "root";
 		String userPassword = "teja0901";
 		Connection con = DriverManager.getConnection(url, userName, userPassword);
+		
+		//query execution
 		String deletingId = request.getParameter("id");
 		String query = "DELETE FROM StudentDetails WHERE id=?";
-		PreparedStatement stmt2 = con.prepareStatement(query);
-		stmt2.setString(1, deletingId);
-		int i = stmt2.executeUpdate();
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, deletingId);
+		int i = stmt.executeUpdate();
+		
+		//sending response to client
 		String res = " "+i+" Rows Updated!!";
 		response.getWriter().write(res);
-		stmt2.close();
+		stmt.close();
 		con.close();
+		
 		}
 		catch (ClassNotFoundException e)
 		{
