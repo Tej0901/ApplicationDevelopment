@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login Page</title>
+<link href="style.css" rel="stylesheet">
+<style type="text/css">
+h1{
+	text-align: center;
+}
+</style>
+</head>
+<body>
+<hr><br> <h1>Enter Your LogIn Credentials</h1> <br><hr>
+
+<div class="loginForm">
+<form action="LoginVerificationServlet" method="post">
+
+<div class="row">
+<label>Enter Admin Name *</label><br>
+<input type="text" name="userName" placeholder="enter Name"><br>
+</div>
+
+<div class="row">
+<label>Enter Password *</label>
+<input type="password" name="userPassword" placeholder="enter password"><br>
+</div>
+
+<input type="submit" value="LogIn">
+</form>
+</div>
+
+<div class="footer">
+ <b>@Copyright Teja-pt7068 </b> <b>2023 - All Right Reserved. </b> 
+</div>
+
+</body>
+</html>
